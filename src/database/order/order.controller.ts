@@ -10,6 +10,7 @@ export class OrderController {
     async CreateOrderInDB(@Body() data: { email: string; order: string }){
 
         const createdOrder = await this.orderSer.createOrder(data);
-        return createdOrder;
+        const sendMessage = await this.orderSer.makeOrderMessageInTelegram(data);
+        return {"order": createdOrder, "messageToUs": sendMessage};
     }
 }
